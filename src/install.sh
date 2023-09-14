@@ -105,8 +105,8 @@ charge_current_max=`cat /sys/class/power_supply/battery/constant_charge_current_
 charge_current_max=$(awk -v x=$charge_current_max 'BEGIN{print x/1000}')
 
 print_modname() {
-  ui_print "Kiana 的充电电流限制模块 v0.1"
-  ui_print "- 当前最大充电电流 $charge_current_max mA"
+  ui_print "Kiana 的充电电流限制模块 3000"
+  ui_print "- 当前最大充电电流为 $charge_current_max mA"
 }
 
 # 在安装脚本中将模块文件复制/解压缩到 $MODPATH.
@@ -114,8 +114,9 @@ print_modname() {
 on_install() {
   # 以下是默认设置: 将 $ZIPFILE/system解压缩到 $MODPATH
   # 将逻辑扩展/更改为您想要的任何内容
-  ui_print "- 提取文件"
-  unzip -o "$ZIPFILE" 'system/*' -d $MODPATH >&2
+  ui_print "- 解压文件"
+  unzip -o "$ZIPFILE" charge_current -d $MODPATH >&2 
+  #'common/*'
 }
 
 # 只有一些特殊文件需要特定权限
